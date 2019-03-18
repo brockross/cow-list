@@ -42,6 +42,7 @@ class CowSubmit extends Component {
           }
           }></input>
       </form>
+      <p>----------------------------------</p>
     </div>
     )
   }

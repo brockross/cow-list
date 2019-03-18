@@ -38,14 +38,6 @@ class App extends Component {
   }
 
   postCow(e, name, desc) {
-
-    // this.props.AccessServer.postNewCow({
-    //   name: name,
-    //   description: desc
-    // }, (data) => {
-    //   this.getCows();
-    // })
-
     this.props.AccessServer.postData({
       name: name,
       description: desc

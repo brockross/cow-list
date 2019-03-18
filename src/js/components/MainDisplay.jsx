@@ -4,7 +4,8 @@ const MainDisplay = (props) => {
   return (
     <div className="mainModal">
       <h3>{props.mainCow.name}</h3>
-      <h4>{props.mainCow.description}</h4>
+      <p><em>{props.mainCow.description}</em></p>
+      <p>----------------------------------</p>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import CowListItem from './CowListItem.jsx';
 
 const List = (props) => {
   return (
-    <div>
+    <div className="cowList">
       <h4>The wonderful bovines of CowHub:</h4>
       <ul>
       {props.cowList.map((cow) => {

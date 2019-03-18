@@ -5,8 +5,8 @@ import CowSubmit from './CowSubmit.jsx';
 import List from './List.jsx';
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       allCows: sampleData.sampleCowData,
@@ -16,6 +16,7 @@ class App extends Component {
 
   componentDidMount() {
     //get cow list from server, update allCows state
+    this.getCows();
   }
 
   handleCowClick(cow) {
@@ -23,29 +24,39 @@ class App extends Component {
     this.setState({
       mainCow: cow
     })
-    //pass down on props of List component
   }
 
   getCows() {
     // send a GET request to the server
+    this.props.AccessServer.getAllCows({}, (data) => {
+      this.setState({
+        allCows: data,
+        mainCow: data[0]
+      })
+    })
     // set state of allCows to the returned result of the GET request
   }
 
   postCow(e, name, desc) {
-    // send POST request to the server with new cow info
-    // don't forget to igore default behavior (page reload)
-    console.log(`postCow has been called. e, name, desc look like: `, e, name, desc);
 
-    let currCows = this.state.allCows;
-    currCows.push({
+    // this.props.AccessServer.postNewCow({
+    //   name: name,
+    //   description: desc
+    // }, (data) => {
+    //   this.getCows();
+    // })
+
+    this.props.AccessServer.postData({
       name: name,
       description: desc
     })
-
-    this.setState({
-      allCows: currCows
-    })
-    // GET all cows from server and re-render list
+      .then((responseData) => {
+        console.log(`response data from POST:`, responseData);
+        this.getCows();
+      })
+      .catch((err) => {
+        console.log(`error during POST: `, err);
+      })
 
   }
 

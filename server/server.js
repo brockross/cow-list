@@ -4,8 +4,10 @@ const port = 3000;
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const sampleData = require('./sampleData');
+const cors = require('cors');
 
 app.use(bodyParser.json());
+app.use(cors());
 
 //============= DATABASE SETUP =============//
 
@@ -21,6 +23,14 @@ db.connect((err) => {
     console.log('mysql successfully connected. Great work team');
 })
 
+
+//================ CORS HEADERS ==================//
+var defaultCorsHeaders = {
+  'access-control-allow-origin': '*',
+  'access-control-allow-methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'access-control-allow-headers': 'content-type, accept, x-parse-application-id',
+  'access-control-max-age': 10 // Seconds.
+};
 
 //================ DEFAULT GET REQUEST ==================//
 app.get('/', (req, res) => {
@@ -39,7 +49,7 @@ app.get('/api/cows', (req, res) => {
     if (err) {
       console.log('your query attempt was a failure, just like everything else in your life');
     }
-      console.log('results of the database query: ', results);
+      console.log('results of the database query:', results);
       res.status(200);
       res.send(results);
   })
@@ -48,7 +58,7 @@ app.get('/api/cows', (req, res) => {
 
 //================ POST REQUEST ==================//
 app.post('/api/cows', (req, res) => {
-  console.log(`Now serving a ${req.method} request`);
+  console.log(`Now serving a ${req.method} request.`);
 
   let cow = req.body;
   let params = [cow.name, cow.description];
